@@ -1,0 +1,116 @@
+Divide-and-Conquer Algorithms on Distributed System Logs
+
+ 
+
+In this project, you will apply divide-and-conquer algorithms to analyze distributed system logs. A Hadoop log dataset will be partitioned into multiple log files representing independent system components. You will develop efficient algorithms to process, analyze, and detect patterns from these distributed log streams.
+
+You can download the several log files derived from the Hadoop log dataset. Each file represents a separate system component and is sorted chronologically.
+https://drive.google.com/file/d/1u2AepGDEyyE2s51BM2Q7v9Xf0jwOp50n/view?usp=sharing
+(these files have been downloaded and put in the CMPSC463/Project1/data directory)
+
+Each log entry begins with a timestamp. Timestamps should be used as the sorting key during merging.
+
+ 
+
+Part 1: Distributed K-Way Log Stream Merger
+Merge multiple chronologically sorted log streams into a single global log stream.
+Implement a divide-and-conquer K-way merge algorithm.
+     - Recursively divide the set of log streams into two groups.
+     - Merge streams within each group.
+     - Perform a final two-way merge to combine the results.
+     - Output a single chronologically sorted log file merged_log.csv
+Requirement: Implement lazy loading. A log file should not be fully loaded into memory before merging. Log entries should be read from disk only when they are needed by the merge process.
+ 
+
+Part 2: Fault Dependency Analysis Using Strassen's Matrix Multiplication
+Identify direct and indirect dependencies among system components.
+1. Build a component dependency matrix A: After constructing the global merged log stream, record a dependency from component X to component Y if an event from component Y immediately follows an event from component X in the merged timeline. The resulting matrix A is a binary matrix
+2. Implement Strassen's Matrix Multiplication algorithm such that it can be applicable to a square matrix of which dimension is not power of 2.
+3. Compute A*A, and A*A*A where A^2 represents two-hop dependencies and A^3 three-hop dependencies between components.
+
+Part3: Divide-and-Conquer Burst Detection
+Detect dense regions of log activity that may indicate burst events.
+"local bursts" are defined in the base case. " If a base-case partition has a span of less than T milliseconds and contains at least M points, it is a local burst.
+span=max timestamp−min timestamp
+Base Case: A recursive partition containing at most B log entries.
+
+
+1. Represent each log event as a point on a timeline.
+2. Recursively divide the timeline using the median timestamp.
+3. Detect local bursts within each half.
+4. During the combine step, examine events within T milliseconds of the partition boundary. If events from both halves collectively satisfy the burst condition, count them as a single cross-boundary burst.
+5. The final outputs are the total number of bursts detected and the list of bursts in the entire log stream.
+
+Each recursive call returns the number of bursts detected in its interval. During the combine step, the algorithm examines logs within T milliseconds of the partition boundary. If these logs form a burst spanning both halves, the total burst count is increased by one.
+
+ 
+
+Deliverables
+1. Code with reasonable comments [25%]
+2. Report [75%]
+
+Report Requirements
+Your report must include the following sections:
+1. Project Description (5%)
+Provide an overview of the project, including its objectives, dataset, and expected outcomes.
+
+2. Algorithms (15%)
+2.1. Distributed K-Way Log Stream Merger Using Divide-and-Conquer
+2.1.1. Algorithm Definition
+   - Input
+   - Output
+   - Problem Statement
+2.1.2. Divide-and-Conquer Design
+   - Base Case
+   - Recursive Strategy
+   - Pseudocode
+2.2. Stressen's algorithm for square matrix multiplication of arbitrary size
+2.1.1. Algorithm Definition
+   - Input
+   - Output
+   - Problem Statement
+2.1.2. Divide-and-Conquer Design
+   - Base Case
+   - Recursive Strategy
+   - Pseudocode
+2.3. Divide-and-Conquer Burst Detection
+2.3.1. Algorithm Definition
+   - Input
+   - Output
+   - Problem Statement
+2.3.2. Divide-and-Conquer Design
+Note: You should be particularly careful when defining and counting a burst that spans a partition boundary ("split burst"). Your design must remain consistent with the problem definition of counting non-overlapping bursts.
+   - Base Case
+   - Recursive Strategy
+   - Pseudocode 
+
+3. Verification Using Toy Examples (15%)
+Demonstrate the correctness of each algorithm using small illustrative examples.
+
+3.1. Distributed K-Way Log Stream Merger
+3.2. Fault Dependency Analysis Using Strassen's Matrix Multiplication
+3.3. Divide-and-Conquer Burst Detection
+
+4. Numerical Experiments Using the Target Dataset  (15%)
+
+4.1. Distributed K-Way Log Stream Merger
+Include a snapshot of the first 20 merged log entries and a snapshot of the last 20 merged log entries
+4.2. Fault Dependency Analysis Using Strassen's Matrix Multiplication
+Include. dependency matrix A, Two-hop dependency matrix A^2, and three-hop dependency matrix A^3
+4.3. Divide-and-Conquer Burst Detection
+Include burst detection results for 6 cases, three different values of T for two different M
+
+5. Discussion (15%)
+5.1. Discussion of Distributed K-Way Log Stream Merger Results
+5.2. Discussion of Using Strassen's Matrix Multiplication
+5.3. Discussion of Divide-and-Conquer Burst Detection Results
+
+6. Conclusions (10%)
+6.1. Key Lessons Learned
+Summarize the concepts, algorithms, and techniques learned through this project.
+6.2. Challenges Encountered
+Discuss the major challenges faced during the algorithm design,  implementation, and experimentation
+
+ 
+
+*Everything here can be subject to change with common-sense reasoning.
