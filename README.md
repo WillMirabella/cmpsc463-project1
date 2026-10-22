@@ -8,8 +8,8 @@
 # CMPSC 463 Project 1: Divide-and-Conquer Algorithms on Distributed System Logs
 
 **Author:** William Mirabella\
-**Course:** CMPSC463  
-**Instructor:** Janghoon Yang
+**Course:** CMPSC463\
+**Instructor:** Janghoon Yang\
 **Date:** October 2026
 
 ---
