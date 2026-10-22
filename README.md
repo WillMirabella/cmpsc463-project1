@@ -206,7 +206,7 @@ function BUILD_DEPENDENCY_MATRIX(merged, k):
 function STRASSEN(X, Y):
     n ← size(X)
     if n = 1: return [[X[0][0] · Y[0][0]]]        // base case
-    if n is odd:                                   // arbitrary-size handling
+    if n is odd:                                  // arbitrary-size handling
         X' ← pad X with one zero row and column
         Y' ← pad Y with one zero row and column
         return top-left n × n block of STRASSEN(X', Y')
